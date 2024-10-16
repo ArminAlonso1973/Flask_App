@@ -1,0 +1,17 @@
+# Archivos de configuración
+.env
+
+# Entornos virtuales
+venv/
+
+# Archivos de caché de Python
+__pycache__/
+*.pyc
+
+# Archivos de sistema
+.DS_Store
+
+# Logs y binarios
+*.log
+*.exe
+

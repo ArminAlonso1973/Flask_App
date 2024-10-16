@@ -65,4 +65,5 @@ def webhook():
 
 if __name__ == "__main__":
     # Correr la aplicación Flask en el puerto 5001
-    app.run(host='0.0.0.0', port=10000)
+    if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
