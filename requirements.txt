@@ -1,10 +1,11 @@
-Flask==2.0.1
-watchdog==5.0.3
-requests==2.25.1
-gunicorn==20.1.0
-psycopg2-binary==2.9.1
-twilio==7.0.0
-python-dotenv==0.19.2
+Flask==2.3.3
+Werkzeug==2.3.7
+watchdog==3.0.0
+requests==2.31.0
+gunicorn==21.2.0
+psycopg2-binary==2.9.9
+twilio==8.9.1
+python-dotenv==1.0.0
 openai>=1.0.0
 
 # Si necesitas una versión específica de Python en Render, puedes especificarlo en un archivo runtime.txt:
