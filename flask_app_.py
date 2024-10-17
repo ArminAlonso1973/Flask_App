@@ -4,6 +4,9 @@ from twilio.rest import Client
 from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
 import logging
+from dotenv import load_dotenv
+
+load_dotenv()  # Esto cargará las variables de entorno desde el archivo .env si está disponible
 
 # Configurar logging
 logging.basicConfig(level=logging.DEBUG)
