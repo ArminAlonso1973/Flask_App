@@ -29,9 +29,41 @@ def home():
     return "Bienvenido al servidor Flask."
 
 
-# Ruta del webhook para recibir mensajes de WhatsApp
 @app.route("/webhook", methods=['POST'])
 def webhook():
+    print("Webhook ha sido llamado.")  # Confirmar que el webhook fue llamado
+
+    # Obtener el mensaje entrante y el número del remitente
+    incoming_msg = request.values.get('Body', '').lower()
+    from_number = request.values.get('From', '')
+    print(f"Mensaje recibido: {incoming_msg} de {from_number}")  # Mostrar mensaje recibido
+
+    # Preparar una respuesta predeterminada si OpenAI falla
+    response_text = "Lo siento, no pude generar una respuesta en este momento."
+
+    # Usar OpenAI para generar una respuesta utilizando el asistente predefinido
+    try:
+        print("Intentando generar una respuesta con OpenAI...")
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "user", "content": incoming_msg},
+            ],
+            max_tokens=50
+        )
+        response_text = response.choices[0].message["content"].strip()
+        print(f"Respuesta generada por OpenAI: {response_text}")
+    except OpenAIError as e:
+        print(f"Error al generar respuesta de OpenAI: {e}")  # Registro detallado del error de OpenAI
+    except Exception as ex:
+        print(f"Otro error ocurrió: {ex}")  # Registro de cualquier otro error
+
+    # Crear una respuesta de Twilio para enviar la respuesta generada de vuelta al remitente
+    resp = MessagingResponse()
+    resp.message(response_text)
+
+    return str(resp)
+
     # Confirmar que el webhook recibió la solicitud
     print("Solicitud recibida en el webhook.")
 
