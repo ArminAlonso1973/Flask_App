@@ -57,7 +57,7 @@ def webhook():
             ],
             max_tokens=50
         )
-        response_text = response.choices[0].message["content"].strip()
+        response_text = response.choices[0].message.content.strip()
         logger.debug(f"Respuesta generada por OpenAI: {response_text}")
     except OpenAIError as e:
         logger.error(f"Error al generar respuesta de OpenAI: {e}")
