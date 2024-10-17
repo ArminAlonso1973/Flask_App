@@ -26,7 +26,8 @@ app = Flask(__name__)
 # Ruta raíz para comprobar que la aplicación está funcionando
 @app.route("/", methods=['GET'])
 def home():
-    return "Bienvenido al servidor Flask. El webhook está activo en /webhook."
+    return "Bienvenido al servidor Flask."
+
 
 # Ruta del webhook para recibir mensajes de WhatsApp
 @app.route("/webhook", methods=['POST'])
@@ -68,5 +69,6 @@ def webhook():
 
 if __name__ == "__main__":
     # Correr la aplicación Flask en el puerto especificado por Render
-    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)), debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 10000)), debug=True)
+
 
