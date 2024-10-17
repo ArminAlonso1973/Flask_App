@@ -40,36 +40,36 @@ def webhook():
     logger.debug("Webhook ha sido llamado.")
 
     # Obtener el mensaje entrante y el número del remitente
-incoming_msg = request.values.get('Body', '').lower()
-from_number = request.values.get('From', '')
-logger.debug(f"Mensaje recibido: {incoming_msg} de {from_number}")
+    incoming_msg = request.values.get('Body', '').lower()
+    from_number = request.values.get('From', '')
+    logger.debug(f"Mensaje recibido: {incoming_msg} de {from_number}")
 
-# Respuesta predeterminada
-response_text = "Lo siento, no pude generar una respuesta en este momento."
+    # Respuesta predeterminada
+    response_text = "Lo siento, no pude generar una respuesta en este momento."
 
-# Generar respuesta con OpenAI
-try:
-    logger.debug("Intentando generar una respuesta con OpenAI...")
-    response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        assistant="asst_k2PfqVu3sM9Kl6U2ryjFiJjs",
-        messages=[
-            {"role": "user", "content": incoming_msg},
-        ],
-        max_tokens=50
-    )
-    response_text = response.choices[0].message.content.strip()
-    logger.debug(f"Respuesta generada por OpenAI: {response_text}")
-except OpenAIError as e:
-    logger.error(f"Error al generar respuesta de OpenAI: {e}")
-except Exception as ex:
-    logger.error(f"Otro error ocurrió: {ex}")
+    # Generar respuesta con OpenAI
+    try:
+        logger.debug("Intentando generar una respuesta con OpenAI...")
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            assistant="asst_k2PfqVu3sM9Kl6U2ryjFiJjs",
+            messages=[
+                {"role": "user", "content": incoming_msg},
+            ],
+            max_tokens=50
+        )
+        response_text = response.choices[0].message.content.strip()
+        logger.debug(f"Respuesta generada por OpenAI: {response_text}")
+    except OpenAIError as e:
+        logger.error(f"Error al generar respuesta de OpenAI: {e}")
+    except Exception as ex:
+        logger.error(f"Otro error ocurrió: {ex}")
 
-# Respuesta de Twilio
-resp = MessagingResponse()
-resp.message(response_text)
+    # Respuesta de Twilio
+    resp = MessagingResponse()
+    resp.message(response_text)
 
-return str(resp)
-    
+    return str(resp)
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 10000)), debug=True)
