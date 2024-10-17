@@ -12,6 +12,12 @@ if not OPENAI_API_KEY:
 # Inicializar el cliente de OpenAI
 client = OpenAI(api_key=OPENAI_API_KEY)
 
+if OPENAI_API_KEY:
+    print("OPENAI_API_KEY cargada correctamente.")
+else:
+    print("Falta la clave OPENAI_API_KEY.")
+
+
 # Inicializar el cliente de Twilio
 TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
 TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
